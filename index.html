@@ -49,6 +49,7 @@
     
     <!-- Red Hat Design System: Navigation Components -->
     <script type="module">
+      import "@rhds/elements/rh-navigation-primary/rh-navigation-primary.js";
       import "@rhds/elements/rh-navigation-secondary/rh-navigation-secondary.js";
       import "@rhds/elements/rh-jump-links/rh-jump-links.js";
       import "@rhds/elements/rh-jump-links/rh-jump-links-list.js";
@@ -61,8 +62,8 @@
       await Promise.race([
         // Load all custom elements
         Promise.allSettled([
-          // Navigation is now regular HTML, no need to wait for custom elements
-          Promise.resolve()
+          customElements.whenDefined('rh-navigation-primary'),
+          customElements.whenDefined('rh-logo-lockup')
         ]),
         // Resolve after two seconds
         new Promise(resolve => setTimeout(resolve, 2000))
@@ -135,29 +136,15 @@
             z-index: 100;
         }
         
-        /* Primary navigation - using regular HTML with lightdom styles */
-        .primary-nav {
+        /* Primary navigation - using web component */
+        rh-navigation-primary {
             position: relative;
             z-index: 40;
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: var(--rh-space-xl, 32px);
-            padding-inline: var(--rh-space-lg, 16px);
-            height: 83px;
-            background-color: var(--rh-color-surface, #ffffff);
-            border-bottom: 1px solid var(--rh-color-border-subtle, #c7c7c7);
-        }
-        
-        @media (min-width: 576px) {
-            .primary-nav {
-                padding-inline: var(--rh-space-2xl, 32px);
-            }
         }
         
         /* Hide primary nav on scroll */
-        body.scrolled .primary-nav {
+        body.scrolled rh-navigation-primary {
             transform: translateY(-100%);
             opacity: 0;
             pointer-events: none;
@@ -165,170 +152,8 @@
             overflow: hidden;
         }
         
-        /* Primary nav items styling (from lightdom CSS) */
-        .primary-nav .nav-item {
-            color: var(--rh-color-text-primary) !important;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-        
-        /* Dropdown container - hide by default */
-        .primary-nav .nav-item .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: var(--rh-color-surface, #ffffff);
-            border: 1px solid var(--rh-color-border-subtle, #c7c7c7);
-            border-radius: 4px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            min-width: 200px;
-            padding: var(--rh-space-lg, 16px);
-            margin-top: var(--rh-space-xs, 4px);
-        }
-        
-        /* Show dropdown on hover/focus/active */
-        .primary-nav .nav-item:hover .dropdown-content,
-        .primary-nav .nav-item:focus-within .dropdown-content,
-        .primary-nav .nav-item.active .dropdown-content {
-            display: block;
-        }
-        
-        /* Hide individual dropdown elements that aren't in a container */
-        .primary-nav .nav-item > h2,
-        .primary-nav .nav-item > .grid,
-        .primary-nav .nav-item > form {
-            display: none;
-        }
-        
-        .primary-nav .nav-item:hover > h2,
-        .primary-nav .nav-item:hover > .grid,
-        .primary-nav .nav-item:hover > form,
-        .primary-nav .nav-item:focus-within > h2,
-        .primary-nav .nav-item:focus-within > .grid,
-        .primary-nav .nav-item:focus-within > form,
-        .primary-nav .nav-item.active > h2,
-        .primary-nav .nav-item.active > .grid,
-        .primary-nav .nav-item.active > form {
-            display: block;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: var(--rh-color-surface, #ffffff);
-            border: 1px solid var(--rh-color-border-subtle, #c7c7c7);
-            border-radius: 4px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            padding: var(--rh-space-lg, 16px);
-            margin-top: var(--rh-space-xs, 4px);
-        }
-        
-        /* Primary navigation items (AI, Docs, Learn) - plain/open style */
-        .primary-nav .nav-item[slot='links'] a.nav-link {
-            color: var(--rh-color-text-primary, #151515) !important;
-            text-decoration: none;
-            padding: var(--rh-space-sm, 8px) var(--rh-space-lg, 16px);
-            display: flex;
-            align-items: center;
-            gap: var(--rh-space-xs, 4px);
-            font-size: var(--rh-font-size-body-text-md, 1rem);
-            font-family: var(--rh-font-family-body-text, 'Red Hat Text', sans-serif);
-            border: none;
-            border-radius: 0;
-            background-color: transparent;
-            transition: background-color 0.2s ease, color 0.2s ease;
-            position: relative;
-        }
-        
-        .primary-nav .nav-item[slot='links'] a.nav-link:hover {
-            background-color: var(--rh-color-surface-hover, #f5f5f5);
-            color: var(--rh-color-text-primary, #151515);
-        }
-        
-        .primary-nav .nav-item[slot='links'] a.nav-link.active,
-        .primary-nav .nav-item[slot='links']:hover a.nav-link {
-            background-color: var(--rh-color-surface-hover, #f5f5f5);
-        }
-        
-        /* Primary links separator */
-        .primary-nav .nav-item[slot='links']:not(:last-of-type)::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            height: 20px;
-            width: 1px;
-            background-color: var(--rh-color-border-subtle, #c7c7c7);
-        }
-        
-        /* Utility navigation items (Search, For you, Avatar) - button style */
-        .primary-nav .nav-item[slot='dropdowns'] a.nav-link {
-            color: var(--rh-color-text-primary, #151515) !important;
-            text-decoration: none;
-            padding: var(--rh-space-xs, 4px) var(--rh-space-md, 12px);
-            display: flex;
-            align-items: center;
-            gap: var(--rh-space-xs, 4px);
-            font-size: var(--rh-font-size-body-text-md, 1rem);
-            font-family: var(--rh-font-family-body-text, 'Red Hat Text', sans-serif);
-            border: 1px solid var(--rh-color-border-subtle, #c7c7c7);
-            border-radius: 4px;
-            background-color: var(--rh-color-surface, #ffffff);
-            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-        }
-        
-        .primary-nav .nav-item[slot='dropdowns'] a.nav-link:hover {
-            background-color: var(--rh-color-surface-hover, #f5f5f5);
-            border-color: var(--rh-color-border-default, #8a8a8a);
-        }
-        
-        .primary-nav .nav-item[slot='dropdowns'] a.nav-link.active {
-            background-color: var(--rh-color-surface-selected, #e8e8e8);
-            border-color: var(--rh-color-border-default, #8a8a8a);
-            color: var(--rh-color-text-primary, #151515);
-        }
-        
-        /* Right-aligned dropdowns */
-        .primary-nav .nav-items-right {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: var(--rh-space-sm, 8px);
-        }
-        
-        .primary-nav .nav-item[slot='dropdowns'] {
-            display: flex;
-            align-items: center;
-        }
-        
-        /* Add chevron icon to nav links that have dropdown content */
-        .primary-nav .nav-item:has(h2, form, .grid) a.nav-link::after,
-        .primary-nav .nav-item[slot='dropdowns'] a.nav-link::after {
-            content: '';
-            display: inline-block;
-            width: 0;
-            height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 4px solid currentColor;
-            margin-left: var(--rh-space-xs, 4px);
-        }
-        
-        /* Ensure icons in nav links are properly sized */
-        .primary-nav .nav-item a.nav-link rh-icon {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-        
-        .primary-nav .nav-item a.nav-link rh-avatar {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-        }
+        /* Primary navigation styles - web component handles most styling via lightdom CSS */
+        /* Additional customizations can go here if needed */
         
         /* Shrink header when primary nav is hidden */
         body.scrolled header {
@@ -510,44 +335,7 @@
             background-color: var(--rh-color-surface-hover, #f5f5f5);
         }
 
-        /* Logo lockup styling */
-        .primary-nav .logo-lockup {
-            display: grid;
-            grid-template-columns: max-content auto;
-            width: max-content;
-            height: 100%;
-            place-content: center;
-        }
-
-        .primary-nav .logo-lockup a {
-            height: 40px;
-            display: block;
-            place-content: center;
-            width: max-content;
-        }
-
-        .primary-nav .logo-lockup a:first-of-type {
-            padding-inline-end: var(--rh-space-lg, 16px);
-        }
-
-        .primary-nav .logo-lockup a:last-of-type {
-            color: var(--rh-color-text-primary, #151515);
-            font-size: var(--rh-font-size-body-text-xl, 1.25rem);
-            text-decoration: none;
-            border-inline-start: 1px solid transparent;
-        }
-
-        @media (min-width: 567px) {
-            .primary-nav .logo-lockup a:last-of-type {
-                border-inline-start-color: var(--rh-color-border-subtle, #c7c7c7);
-                padding-inline-start: var(--rh-space-lg, 16px);
-            }
-        }
-
-        .primary-nav .logo-lockup svg {
-            block-size: 30px;
-            inline-size: 42px;
-        }
+        /* Logo lockup is handled by the custom rh-logo-lockup component */
 
         /* Custom scrollbars */
         #left-sidebar::-webkit-scrollbar,
@@ -728,21 +516,23 @@
         -->
         <header class="col-span-3 sticky top-0" style="z-index: 100;">
             <!-- Primary Navigation -->
-            <nav class="primary-nav" role="navigation">
-                <div class="logo-lockup">
-                    <a href="https://www.redhat.com/" title="redhat.com">
-                        <svg preserveAspectRatio="xMinYMid slice" viewBox="0 0 613 145">
-                          <title>Red Hat</title>
-                          <path fill="var(--rh-color-brand-red, #ee0000)" d="M127.47,83.49c12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89,8.69,103.76.5,97.51.5,91.69.5,90,8,83.06,8c-6.68,0-11.64-5.6-17.89-5.6-6,0-9.91,4.09-12.93,12.5,0,0-8.41,23.72-9.49,27.16A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33C22.27,52,.5,55,.5,74.22c0,31.48,74.59,70.28,133.65,70.28,45.28,0,56.7-20.48,56.7-36.65,0-12.72-11-27.16-30.83-35.78"></path>
-                          <path d="M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33l3.66-9.06A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45,12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42Z"></path>
-                        </svg>
-                    </a>
-                    <a href="https://docs.redhat.com/">
-                       <span>Documentation</span>
-                    </a>
-                </div>
-                <div class="nav-item" slot="links">
-                    <a href="#" class="nav-link">AI</a>
+            <rh-navigation-primary role="navigation">
+                <rh-logo-lockup slot="logo">
+                    <div id="container" class="compact">
+                        <a id="logo" href="https://www.redhat.com/" title="redhat.com">
+                            <svg preserveAspectRatio="xMinYMid slice" viewBox="0 0 613 145">
+                              <title>Red Hat</title>
+                              <path fill="var(--rh-color-brand-red, #ee0000)" d="M127.47,83.49c12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89,8.69,103.76.5,97.51.5,91.69.5,90,8,83.06,8c-6.68,0-11.64-5.6-17.89-5.6-6,0-9.91,4.09-12.93,12.5,0,0-8.41,23.72-9.49,27.16A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33C22.27,52,.5,55,.5,74.22c0,31.48,74.59,70.28,133.65,70.28,45.28,0,56.7-20.48,56.7-36.65,0-12.72-11-27.16-30.83-35.78"></path>
+                              <path d="M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33l3.66-9.06A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45,12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42Z"></path>
+                            </svg>
+                        </a>
+                        <a id="secondary" href="https://docs.redhat.com/">
+                            <span>Documentation</span>
+                        </a>
+                    </div>
+                </rh-logo-lockup>
+                <rh-navigation-primary-item variant="dropdown">
+                    <span slot="summary">AI</span>
                     <h2>AI Content</h2>
                     <div class="grid">
                         <div class="column">
@@ -773,9 +563,9 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div class="nav-item" slot="links">
-                    <a href="#" class="nav-link">Documentation</a>
+                </rh-navigation-primary-item>
+                <rh-navigation-primary-item variant="dropdown">
+                    <span slot="summary">Documentation</span>
                     <h2>Documentation Content</h2>
                     <div class="grid">
                         <div class="column">
@@ -806,38 +596,33 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div class="nav-item" slot="links">
-                    <a href="#" class="nav-link">Learn</a>
-                </div>
-                <div class="nav-items-right">
-                    <div class="nav-item" slot="dropdowns">
-                        <a href="#" class="nav-link">
-                            <rh-icon icon="search" set="ui"></rh-icon>
-                            <span>Search</span>
-                        </a>
-                        <form>
-                            <label for="search">Search</label>
-                            <input id="search" type="search"><button>Search</button>
-                        </form>
-                    </div>
-                    <div class="nav-item" slot="dropdowns" hide-at="sm">
-                        <a href="#" class="nav-link">
-                            <rh-icon icon="notification" set="ui"></rh-icon>
-                            <span>For you</span>
-                        </a>
-                        <h2>Recommendations for you</h2>
-                        <p>As you browse redhat.com, we'll recommend resources you may like. For now, try these.</p>
-                        <ul>
-                            <li><a href="#">All Red Hat products</a></li>
-                            <li><a href="#">Tech topics</a></li>
-                            <li><a href="#">Red Hat resources</a></li>
-                        </ul>
-                    </div>
-                    <div class="nav-item" slot="dropdowns">
-                        <a href="#" class="nav-link">
-                            <rh-avatar plain="" layout="inline"></rh-avatar>
-                        </a>
+                </rh-navigation-primary-item>
+                <rh-navigation-primary-item variant="dropdown">
+                    <span slot="summary">Learn</span>
+                    Learn Content
+                </rh-navigation-primary-item>
+                <rh-navigation-primary-item slot="dropdowns" variant="dropdown">
+                    <rh-icon slot="icon" icon="search" set="ui"></rh-icon>
+                    <span slot="summary">Search</span>
+                    <form>
+                        <label for="search">Search</label>
+                        <input id="search" type="search"><button>Search</button>
+                    </form>
+                </rh-navigation-primary-item>
+                <rh-navigation-primary-item slot="dropdowns" hide-at="sm" variant="dropdown">
+                    <rh-icon slot="icon" icon="notification" set="ui"></rh-icon>
+                    <span slot="summary">For you</span>
+                    <h2>Recommendations for you</h2>
+                    <p>As you browse redhat.com, we'll recommend resources you may like. For now, try these.</p>
+                    <ul>
+                        <li><a href="#">All Red Hat products</a></li>
+                        <li><a href="#">Tech topics</a></li>
+                        <li><a href="#">Red Hat resources</a></li>
+                    </ul>
+                </rh-navigation-primary-item>
+                <rh-navigation-primary-item slot="dropdowns" variant="dropdown">
+                    <rh-avatar slot="icon" plain="" layout="inline"></rh-avatar>
+                    <span slot="summary"><!--My Red Hat--></span>
                     <div class="grid">
                         <div id="profile">
                             <div class="lockup">
@@ -907,9 +692,8 @@
                             </ul>
                         </div>
                     </div>
-                    </div>
-                </div>
-            </nav>
+                </rh-navigation-primary-item>
+            </rh-navigation-primary>
     
             <!-- Secondary Navigation - Simple HTML Version -->
             <nav class="secondary-nav" style="height: 55px; background-color: var(--rh-color-surface, #ffffff); border-bottom: 1px solid var(--rh-color-border-subtle, #c7c7c7); display: flex; align-items: center; justify-content: space-between; padding: 0 var(--rh-space-2xl, 32px); position: relative;">
@@ -954,7 +738,8 @@
                     <li>
                         <span class="left-nav-heading">Discover</span>
                         <ul class="mt-1 space-y-1" style="margin-left: 0;">
-                        <div class="split-button-container">
+                            <li>
+                                <div class="split-button-container">
                                     <a href="#" class="split-button-link">Overview</a>
                                     <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -2518,13 +2303,25 @@
             
             chevronToggles.forEach(toggle => {
                 toggle.addEventListener('click', function(e) {
-                    // Find the parent <li>, then find the next <ul>
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Find the parent <li> that contains this split button
                     const parentLi = e.currentTarget.closest('li');
-                    const childList = parentLi.querySelector('ul');
+                    
+                    if (!parentLi) {
+                        console.warn('Could not find parent <li> for chevron toggle');
+                        return;
+                    }
+                    
+                    // Find the child <ul> that should be toggled (the one with the hidden class)
+                    const childList = parentLi.querySelector('ul.ml-6');
                     
                     if (childList) {
                         childList.classList.toggle('hidden');
                         e.currentTarget.classList.toggle('expanded');
+                    } else {
+                        console.warn('Could not find child list for chevron toggle');
                     }
                 });
             });
@@ -2567,7 +2364,7 @@
 
                     // --- Hide primary nav on scroll ---
             let lastScrollTop = 0;
-            const primaryNav = document.querySelector('.primary-nav');
+            const primaryNav = document.querySelector('rh-navigation-primary');
             
             window.addEventListener('scroll', function() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -2601,7 +2398,7 @@ class RhLogoLockup extends LitElement {
       place-content: center;
       height: 100%;
       width: 100%;
-      }    
+    }    
     
     #container {
       display: grid;
@@ -2657,16 +2454,27 @@ class RhLogoLockup extends LitElement {
           display: inline; 
         }
       }
+    }
+     
+    #secondary > span {
+      font-size: 1rem;
+    }
+    
+    @container (min-width: 567px) {
+      #secondary {
+        font-size: var(--rh-font-size-body-text-xl, 1.25rem);
+        padding-inline-start: var(--rh-space-lg, 16px);
+      }
+    }
+    
+    #secondary > span { 
+      display: none; 
+      
+      @container (min-width: 768px) {
+        display: inline; 
+      }
     }     
   `;
-  
-  private _ro?: ResizeObserver;
-  @state() compact = false;
-  
-  @property({ reflect: true, attribute: 'logo-href' }) logoHref: 'https://www.redhat.com/en/';
-  
-  @property({ reflect: true, attribute: 'secondary-href' }) secondaryHref: 'https://docs.redhat.com/en/';
-
   
   constructor() {
     super();
@@ -2674,47 +2482,41 @@ class RhLogoLockup extends LitElement {
       for (const entry of entries) {
         const [contentBoxSize] = entry.contentBoxSize;
         const oldState = this.compact;
-        const newState = contentBoxSize.inlineSize < 320;;
+        const newState = contentBoxSize.inlineSize < 320;
         if (oldState !== newState) {
           this.compact = newState;
         }
       }
     });
-  }  
+  }
+  
+  _ro = null;
+  compact = false;
+  
+  static properties = {
+    logoHref: { type: String, reflect: true, attribute: 'logo-href' },
+    secondaryHref: { type: String, reflect: true, attribute: 'secondary-href' }
+  };
   
   connectedCallback() {
     super.connectedCallback();
-    this._ro?.observe(this);
+    if (this._ro) {
+      this._ro.observe(this);
+    }
   }
   
-  protected firstUpdated() {
+  firstUpdated() {
     this.compact = this.offsetWidth < 320;
   }
   
   render() {
-    const { compact, stacked } = this;
+    const { compact } = this;
     const classes = {
-      compact,
-      stacked
+      compact
     };
 
     return html`
-      <div id="container" class="${ classMap(classes) }">
-        // <a id="logo" href="https://www.redhat.com/" title="redhat.com"><slot name="logo">
-        //   <svg preserveAspectRatio="xMinYMid slice" viewBox="0 0 613 145">
-        //     <title>Red Hat</title>
-        //     <path fill="var(--rh-color-brand-red, #ee0000)" d="M127.47,83.49c12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89,8.69,103.76.5,97.51.5,91.69.5,90,8,83.06,8c-6.68,0-11.64-5.6-17.89-5.6-6,0-9.91,4.09-12.93,12.5,0,0-8.41,23.72-9.49,27.16A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33C22.27,52,.5,55,.5,74.22c0,31.48,74.59,70.28,133.65,70.28,45.28,0,56.7-20.48,56.7-36.65,0-12.72-11-27.16-30.83-35.78"></path>
-
-        //     <path d="M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33l3.66-9.06A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45,12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42Z"></path>
-        //     <path fill="light-dark(var(--rh-color-text-primary-on-light, #151515), var(--rh-color-text-primary-on-dark, #ffffff))" d="M579.74,92.8c0,11.89,7.15,17.67,20.19,17.67a52.11,52.11,0,0,0,11.89-1.68V95a24.84,24.84,0,0,1-7.68,1.16c-5.37,0-7.36-1.68-7.36-6.73V68.3h15.56V54.1H596.78v-18l-17,3.68V54.1H568.49V68.3h11.25Zm-53,.32c0-3.68,3.69-5.47,9.26-5.47a43.12,43.12,0,0,1,10.1,1.26v7.15a21.51,21.51,0,0,1-10.63,2.63c-5.46,0-8.73-2.1-8.73-5.57m5.2,17.56c6,0,10.84-1.26,15.36-4.31v3.37h16.82V74.08c0-13.56-9.14-21-24.39-21-8.52,0-16.94,2-26,6.1l6.1,12.52c6.52-2.74,12-4.42,16.83-4.42,7,0,10.62,2.73,10.62,8.31v2.73a49.53,49.53,0,0,0-12.62-1.58c-14.31,0-22.93,6-22.93,16.73,0,9.78,7.78,17.24,20.19,17.24m-92.44-.94h18.09V80.92h30.29v28.82H506V36.12H487.93V64.41H457.64V36.12H439.55ZM370.62,81.87c0-8,6.31-14.1,14.62-14.1A17.22,17.22,0,0,1,397,72.09V91.54A16.36,16.36,0,0,1,385.24,96c-8.2,0-14.62-6.1-14.62-14.09m26.61,27.87h16.83V32.44l-17,3.68V57.05a28.3,28.3,0,0,0-14.2-3.68c-16.19,0-28.92,12.51-28.92,28.5a28.25,28.25,0,0,0,28.4,28.6,25.12,25.12,0,0,0,14.93-4.83ZM320,67c5.36,0,9.88,3.47,11.67,8.83H308.47C310.15,70.3,314.36,67,320,67M291.33,82c0,16.2,13.25,28.82,30.28,28.82,9.36,0,16.2-2.53,23.25-8.42l-11.26-10c-2.63,2.74-6.52,4.21-11.14,4.21a14.39,14.39,0,0,1-13.68-8.83h39.65V83.55c0-17.67-11.88-30.39-28.08-30.39a28.57,28.57,0,0,0-29,28.81M262,51.58c6,0,9.36,3.78,9.36,8.31S268,68.2,262,68.2H244.11V51.58Zm-36,58.16h18.09V82.92h13.77l13.89,26.82H292l-16.2-29.45a22.27,22.27,0,0,0,13.88-20.72c0-13.25-10.41-23.45-26-23.45H226Z"></path>
-        //   </svg>
-        // </slot></a>
-        
-        <a id="secondary" href="${this.secondaryHref}">
-           <!--<span>Red Hat</span>-->
-           <slot name="secondary"></slot>
-        </a>
-      </div>
+      <slot></slot>
     `;
   }
 }
