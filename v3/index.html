@@ -136,15 +136,226 @@
             z-index: 100;
         }
         
-        /* Primary navigation - using web component */
-        rh-navigation-primary {
+        /* Lightweight Primary Navigation */
+        .primary-nav {
             position: relative;
             z-index: 40;
+            background-color: var(--rh-color-surface, #ffffff);
+            border-bottom: 1px solid var(--rh-color-border-subtle, #c7c7c7);
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
         }
         
+        .primary-nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--rh-space-2xl, 32px);
+            height: 82px;
+            max-width: 100%;
+        }
+        
+        .primary-nav-left {
+            display: flex;
+            align-items: center;
+            gap: var(--rh-space-xl, 24px);
+        }
+        
+        .primary-nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        
+        .primary-nav-logo svg {
+            width: 32px;
+            height: 23px;
+            flex-shrink: 0;
+        }
+        
+        .primary-nav-logo span {
+            font-family: var(--rh-font-family-heading, 'Red Hat Display', sans-serif);
+            font-weight: 700;
+            font-size: 20px;
+            margin-left: 16px;
+            color: #000000;
+        }
+        
+        .primary-nav-items {
+            display: flex;
+            align-items: center;
+            gap: var(--rh-space-md, 12px);
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .primary-nav-item {
+            position: relative;
+        }
+        
+        .primary-nav-item > a,
+        .primary-nav-item > button {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: var(--rh-space-sm, 8px) var(--rh-space-md, 12px);
+            text-decoration: none;
+            color: var(--rh-color-text-primary, #151515);
+            font-family: var(--rh-font-family-body-text, 'Red Hat Text', sans-serif);
+            font-size: var(--rh-font-size-body-text-md, 1rem);
+            background: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 0;
+        }
+        
+        .primary-nav-item > a:hover,
+        .primary-nav-item > button:hover {
+            text-decoration: underline;
+        }
+        
+        .primary-nav-item.has-dropdown > button {
+            position: relative;
+        }
+        
+        .primary-nav-item.has-dropdown > button rh-icon {
+            margin-left: 4px;
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+        
+        .primary-nav-item.dropdown-open > button rh-icon {
+            transform: rotate(180deg);
+        }
+        
+        .primary-nav-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid var(--rh-color-border-subtle, #c7c7c7);
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-width: 300px;
+            padding: var(--rh-space-lg, 16px);
+            display: none;
+            z-index: 1000;
+        }
+        
+        .primary-nav-item.dropdown-open .primary-nav-dropdown {
+            display: block;
+        }
+        
+        .primary-nav-right {
+            display: flex;
+            align-items: center;
+            gap: var(--rh-space-lg, 16px);
+        }
+        
+        .primary-nav-quicklinks {
+            display: flex;
+            align-items: center;
+            gap: var(--rh-space-md, 12px);
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .primary-nav-quicklinks a {
+            text-decoration: none;
+            color: var(--rh-color-text-primary, #151515);
+            font-family: var(--rh-font-family-body-text, 'Red Hat Text', sans-serif);
+            font-size: var(--rh-font-size-body-text-sm, 1rem);
+            padding: var(--rh-space-sm, 8px) var(--rh-space-md, 12px);
+        }
+        
+        .primary-nav-quicklinks a:hover {
+            text-decoration: underline;
+        }
+        
+        .primary-nav-icon-btn {
+            position: relative;
+            background: none;
+            border: none;
+            padding: var(--rh-space-sm, 8px);
+            cursor: pointer;
+            color: var(--rh-color-text-primary, #151515);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+        
+        .primary-nav-icon-btn:hover {
+            background-color: var(--rh-color-surface-hover, #f5f5f5);
+        }
+        
+        .primary-nav-icon-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 8px;
+            height: 8px;
+            background-color: #ee0000;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        
+        /* Notification badge styling */
+        rh-navigation-primary-item[slot="dropdowns"] {
+            position: relative;
+        }
+        
+        rh-navigation-primary-item[slot="dropdowns"] rh-icon[icon="notification"] {
+            position: relative;
+        }
+        
+        rh-navigation-primary-item[slot="dropdowns"] rh-icon[icon="notification"]::after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: #ee0000;
+            border-radius: 50%;
+            border: 2px solid white;
+            z-index: 10;
+        }
+        
+        /* Remove rounded boxes and chevrons from utility items */
+        rh-navigation-primary-item:not([variant="dropdown"]) {
+            border-radius: 0 !important;
+        }
+        
+        rh-navigation-primary-item:not([variant="dropdown"]) a[slot="summary"] {
+            border-radius: 0 !important;
+            background: none !important;
+            padding: var(--rh-space-sm, 8px) var(--rh-space-md, 12px) !important;
+        }
+        
+        rh-navigation-primary-item:not([variant="dropdown"]) a[slot="summary"]:hover {
+            background-color: transparent !important;
+            text-decoration: underline;
+        }
+        
+        /* Hide chevron/dropdown indicator for non-dropdown items */
+        rh-navigation-primary-item:not([variant="dropdown"])::after,
+        rh-navigation-primary-item:not([variant="dropdown"]) button,
+        rh-navigation-primary-item:not([variant="dropdown"]) [role="button"] {
+            display: none !important;
+        }
+        
         /* Hide primary nav on scroll */
-        body.scrolled rh-navigation-primary {
+        body.scrolled .primary-nav {
             transform: translateY(-100%);
             opacity: 0;
             pointer-events: none;
@@ -210,14 +421,13 @@
         /* Split button container - v3: chevrons on left, 8px from left edge */
         #left-sidebar .split-button-container {
             display: flex;
-            align-items: stretch;
+            align-items: flex-start; /* v3: Align chevron to top */
             flex-direction: row; /* Chevron first, then text */
             gap: 4px; /* v3: 4px gap between chevron container and text */
             /* border-radius: 4px; */
             overflow: visible; /* Allow chevron to extend past */
             border: none; /* v3: No border */
             margin-left: 8px; /* v3: 8px from left edge to chevron */
-            align-items: center;
         }
         
         /* v3: Category titles - NOT links, NOT split buttons, just text headings */
@@ -250,7 +460,8 @@
         #left-sidebar .split-button-link {
             flex: 1;
             text-decoration: none;
-            padding: 4px;
+            padding-top: 2px;
+            padding-bottom: 4px;
             display: flex;
             align-items: center;
             transition: background-color 0.2s ease;
@@ -285,11 +496,11 @@
             /* background-color: var(--rh-color-surface-hover, #f5f5f5); */
         }
         
-        /* Chevron button part of split button - v3: on left, 4px padding container, no border */
+        /* Chevron button part of split button - v3: on left, 8px padding container, no border */
         #left-sidebar .chevron-toggle {
             background: none;
             border: none; /* v3: No border */
-            padding: 4px; /* v3: 4px padding for chevron container */
+            padding: 7px; /* v3: 8px padding for 24px touch target (8px icon + 8px padding each side = 24px) */
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -628,185 +839,146 @@
           Spans all 3 columns
         -->
         <header class="col-span-3 sticky top-0" style="z-index: 100;">
-            <!-- Primary Navigation -->
-            <rh-navigation-primary role="navigation">
-                <rh-logo-lockup slot="logo">
-                    <div id="container" class="compact">
-                        <a id="logo" href="https://www.redhat.com/" title="redhat.com">
+            <!-- Primary Navigation - Lightweight HTML/CSS -->
+            <nav class="primary-nav" role="navigation">
+                <div class="primary-nav-container">
+                    <div class="primary-nav-left">
+                        <a href="https://docs.redhat.com/" class="primary-nav-logo">
                             <svg preserveAspectRatio="xMinYMid slice" viewBox="0 0 613 145">
                               <title>Red Hat</title>
                               <path fill="var(--rh-color-brand-red, #ee0000)" d="M127.47,83.49c12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89,8.69,103.76.5,97.51.5,91.69.5,90,8,83.06,8c-6.68,0-11.64-5.6-17.89-5.6-6,0-9.91,4.09-12.93,12.5,0,0-8.41,23.72-9.49,27.16A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33C22.27,52,.5,55,.5,74.22c0,31.48,74.59,70.28,133.65,70.28,45.28,0,56.7-20.48,56.7-36.65,0-12.72-11-27.16-30.83-35.78"></path>
                               <path d="M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33l3.66-9.06A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45,12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42Z"></path>
                             </svg>
+                            <span>Docs</span>
                         </a>
-                        <a id="secondary" href="https://docs.redhat.com/">
-                            <span>Documentation</span>
-                        </a>
-                    </div>
-                </rh-logo-lockup>
-                <rh-navigation-primary-item variant="dropdown">
-                    <span slot="summary">AI</span>
-                    <h2>AI Content</h2>
-                    <div class="grid">
-                        <div class="column">
-                            <ul>
-                                <li><a href="#">Link 1</a></li>
-                                <li><a href="#">Link 2</a></li>
-                                <li><a href="#">Link 3</a></li>
-                                <li><a href="#">Link 4</a></li>
-                                <li><a href="#">Link 5</a></li>
-                            </ul>
-                        </div>
-                        <div class="column">
-                            <ul>
-                                <li><a href="#">Link 1a</a></li>
-                                <li><a href="#">Link 2a</a></li>
-                                <li><a href="#">Link 3a</a></li>
-                                <li><a href="#">Link 4a</a></li>
-                                <li><a href="#">Link 5a</a></li>
-                            </ul>
-                        </div>
-                        <div class="column">
-                            <ul>
-                                <li><a href="#">Link 1b</a></li>
-                                <li><a href="#">Link 2b</a></li>
-                                <li><a href="#">Link 3b</a></li>
-                                <li><a href="#">Link 4b</a></li>
-                                <li><a href="#">Link 5b</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </rh-navigation-primary-item>
-                <rh-navigation-primary-item variant="dropdown">
-                    <span slot="summary">Documentation</span>
-                    <h2>Documentation Content</h2>
-                    <div class="grid">
-                        <div class="column">
-                            <ul>
-                                <li><a href="#">Link 1</a></li>
-                                <li><a href="#">Link 2</a></li>
-                                <li><a href="#">Link 3</a></li>
-                                <li><a href="#">Link 4</a></li>
-                                <li><a href="#">Link 5</a></li>
-                            </ul>
-                        </div>
-                        <div class="column">
-                            <ul>
-                                <li><a href="#">Link 1a</a></li>
-                                <li><a href="#">Link 2a</a></li>
-                                <li><a href="#">Link 3a</a></li>
-                                <li><a href="#">Link 4a</a></li>
-                                <li><a href="#">Link 5a</a></li>
-                            </ul>
-                        </div>
-                        <div class="column">
-                            <ul>
-                                <li><a href="#">Link 1b</a></li>
-                                <li><a href="#">Link 2b</a></li>
-                                <li><a href="#">Link 3b</a></li>
-                                <li><a href="#">Link 4b</a></li>
-                                <li><a href="#">Link 5b</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </rh-navigation-primary-item>
-                <rh-navigation-primary-item variant="dropdown">
-                    <span slot="summary">Learn</span>
-                    Learn Content
-                </rh-navigation-primary-item>
-                <rh-navigation-primary-item slot="dropdowns" variant="dropdown">
-                    <rh-icon slot="icon" icon="search" set="ui"></rh-icon>
-                    <span slot="summary">Search</span>
-                    <form>
-                        <label for="search">Search</label>
-                        <input id="search" type="search"><button>Search</button>
-                    </form>
-                </rh-navigation-primary-item>
-                <rh-navigation-primary-item slot="dropdowns" hide-at="sm" variant="dropdown">
-                    <rh-icon slot="icon" icon="notification" set="ui"></rh-icon>
-                    <span slot="summary">For you</span>
-                    <h2>Recommendations for you</h2>
-                    <p>As you browse redhat.com, we'll recommend resources you may like. For now, try these.</p>
-                    <ul>
-                        <li><a href="#">All Red Hat products</a></li>
-                        <li><a href="#">Tech topics</a></li>
-                        <li><a href="#">Red Hat resources</a></li>
-                    </ul>
-                </rh-navigation-primary-item>
-                <rh-navigation-primary-item slot="dropdowns" variant="dropdown">
-                    <rh-avatar slot="icon" plain="" layout="inline"></rh-avatar>
-                    <span slot="summary"><!--My Red Hat--></span>
-                    <div class="grid">
-                        <div id="profile">
-                            <div class="lockup">
-                                <rh-avatar plain=""></rh-avatar>
-                                <div class="account">
-                                    <div class="name">Mr. Roboto</div>
-                                    <div class="edit"><a href="#">
-                                        <rh-icon icon="edit" set="ui"></rh-icon> Edit Avatar
-                                    </a></div>
+                        <ul class="primary-nav-items">
+                            <li class="primary-nav-item has-dropdown">
+                                <button type="button">AI<rh-icon icon="caret-down" set="micron"></rh-icon></button>
+                                <div class="primary-nav-dropdown">
+                                    <h2>AI Content</h2>
+                                    <div class="grid">
+                                        <div class="column">
+                                            <ul>
+                                                <li><a href="#">Link 1</a></li>
+                                                <li><a href="#">Link 2</a></li>
+                                                <li><a href="#">Link 3</a></li>
+                                                <li><a href="#">Link 4</a></li>
+                                                <li><a href="#">Link 5</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="column">
+                                            <ul>
+                                                <li><a href="#">Link 1a</a></li>
+                                                <li><a href="#">Link 2a</a></li>
+                                                <li><a href="#">Link 3a</a></li>
+                                                <li><a href="#">Link 4a</a></li>
+                                                <li><a href="#">Link 5a</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="column">
+                                            <ul>
+                                                <li><a href="#">Link 1b</a></li>
+                                                <li><a href="#">Link 2b</a></li>
+                                                <li><a href="#">Link 3b</a></li>
+                                                <li><a href="#">Link 4b</a></li>
+                                                <li><a href="#">Link 5b</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="info">
-                                    <div>Login: jdoe@redhat.com</div>
-                                    <div>Account number: 0123456</div>
-                                    <div>jdoe+alias@redhat.com</div>
+                            </li>
+                            <li class="primary-nav-item has-dropdown">
+                                <button type="button">Learn<rh-icon icon="caret-down" set="micron"></rh-icon></button>
+                                <div class="primary-nav-dropdown">
+                                    <h2>Learn Content</h2>
+                                    <div class="grid">
+                                        <div class="column">
+                                            <ul>
+                                                <li><a href="#">Link 1</a></li>
+                                                <li><a href="#">Link 2</a></li>
+                                                <li><a href="#">Link 3</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="language">
-                                    <label for="language">Language</label>
-                                    <select id="language">
-                                        <option>English</option>
-                                        <option>French</option>
-                                        <option>German</option>
-                                    </select>
+                            </li>
+                            <li class="primary-nav-item has-dropdown">
+                                <button type="button">Documentation<rh-icon icon="caret-down" set="micron"></rh-icon></button>
+                                <div class="primary-nav-dropdown">
+                                    <h2>Documentation Content</h2>
+                                    <div class="grid">
+                                        <div class="column">
+                                            <ul>
+                                                <li><a href="#">Link 1</a></li>
+                                                <li><a href="#">Link 2</a></li>
+                                                <li><a href="#">Link 3</a></li>
+                                                <li><a href="#">Link 4</a></li>
+                                                <li><a href="#">Link 5</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="column">
+                                            <ul>
+                                                <li><a href="#">Link 1a</a></li>
+                                                <li><a href="#">Link 2a</a></li>
+                                                <li><a href="#">Link 3a</a></li>
+                                                <li><a href="#">Link 4a</a></li>
+                                                <li><a href="#">Link 5a</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="column">
+                                            <ul>
+                                                <li><a href="#">Link 1b</a></li>
+                                                <li><a href="#">Link 2b</a></li>
+                                                <li><a href="#">Link 3b</a></li>
+                                                <li><a href="#">Link 4b</a></li>
+                                                <li><a href="#">Link 5b</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="logout">
-                                    <rh-button danger="">Log out</rh-button>
+                            </li>
+                            <li class="primary-nav-item has-dropdown">
+                                <button type="button">Resources<rh-icon icon="caret-down" set="micron"></rh-icon></button>
+                                <div class="primary-nav-dropdown">
+                                    <h2>Resources Content</h2>
+                                    <div class="grid">
+                                        <div class="column">
+                                            <ul>
+                                                <li><a href="#">Link 1</a></li>
+                                                <li><a href="#">Link 2</a></li>
+                                                <li><a href="#">Link 3</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="content-column">
-                            <ul>
-                                <li>
-                                    <a href="#">Account details</a>
-                                    <p>Edit your contact info, password, location preferences, and errata notifications.</p>
-                                </li>
-                                <li>
-                                    <a href="#">Community profile</a>
-                                    <p>Fill out your public profile and control what content you follow.</p>
-                                </li>
-                                <li>
-                                    <a href="#">My Red Hat </a>
-                                    <p>Get a customized view of resources to help you use our products, solutions, and services.</p>
-                                </li>
-                                <li>
-                                    <a href="#">Training &amp; certification</a>
-                                    <p>Access your Red Hat Learning Subscription, courses, and exams.</p>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="content-column">
-                            <ul>
-                                <li>
-                                    <a href="#">Subscriptions</a>
-                                    <p>Manage your subscriptions.</p>
-                                </li>
-                                <li>
-                                    <a href="#">Support Cases</a>
-                                    <p>Manage your support tickets.</p>
-                                </li>
-                                <li>
-                                    <a href="#">User management</a>
-                                    <p>Manage users in your organization.</p>
-                                </li>
-                                <li>
-                                    <a href="#">Activate Red Hat</a>
-                                    <p>Activate your subscription to gain access to updates and support.</p>
-                                </li>
-                            </ul>
-                        </div>
+                            </li>
+                        </ul>
                     </div>
-                </rh-navigation-primary-item>
-            </rh-navigation-primary>
+                    <div class="primary-nav-right">
+                        <ul class="primary-nav-quicklinks">
+                            <li><a href="#">Console</a></li>
+                            <li><a href="#">Developers</a></li>
+                            <li><a href="#">Support</a></li>
+                        </ul>
+                        <button type="button" class="primary-nav-icon-btn" aria-label="Search">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </button>
+                        <button type="button" class="primary-nav-icon-btn" aria-label="Notifications">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                            </svg>
+                            <span class="notification-badge"></span>
+                        </button>
+                        <button type="button" class="primary-nav-icon-btn" aria-label="User profile">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </nav>
     
             <!-- Secondary Navigation - Simple HTML Version -->
             <nav class="secondary-nav" style="height: 55px; background-color: var(--rh-color-surface, #ffffff); border-bottom: 1px solid var(--rh-color-border-subtle, #c7c7c7); display: flex; align-items: center; justify-content: space-between; padding: 0 var(--rh-space-2xl, 32px); position: relative;">
@@ -815,7 +987,7 @@
                     <div style="position: relative;">
                         <button class="version-dropdown" style="display: flex; align-items: center; gap: var(--rh-space-xs, 4px); padding: var(--rh-space-xs, 4px) var(--rh-space-sm, 8px); border: 1px solid var(--rh-color-border-subtle, #c7c7c7); border-radius: 4px; background: transparent; cursor: pointer; font-size: var(--rh-font-size-body-text-sm, 0.875rem); color: var(--rh-color-text-primary, #151515);">
                             <span>4.20</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10" style="width: 16px; height: 16px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8" style="width: 16px; height: 16px;">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                             </svg>
                         </button>
@@ -830,7 +1002,7 @@
                     <div style="display: flex; border: 1px solid var(--rh-color-border-subtle, #c7c7c7); border-radius: 4px; overflow: hidden;">
                         <button style="padding: var(--rh-space-xs, 4px) var(--rh-space-md, 12px); border: none; border-right: 1px solid var(--rh-color-border-subtle, #c7c7c7); background: transparent; cursor: pointer; font-size: var(--rh-font-size-body-text-sm, 0.875rem); color: var(--rh-color-text-primary, #151515); font-family: var(--rh-font-family-body-text, 'Red Hat Text', sans-serif);">Ask Red Hat</button>
                         <button class="ask-dropdown" style="padding: var(--rh-space-xs, 4px) var(--rh-space-sm, 8px); border: none; background: transparent; cursor: pointer; display: flex; align-items: center;">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10" style="width: 16px; height: 16px; color: var(--rh-color-text-primary, #151515);">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8" style="width: 16px; height: 16px; color: var(--rh-color-text-primary, #151515);">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                             </svg>
                         </button>
@@ -854,7 +1026,7 @@
                             <li>
                                 <div class="split-button-container">
                                     <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -869,7 +1041,7 @@
                             <li>
                                 <div class="split-button-container">
                                     <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -891,7 +1063,7 @@
                             <li>
                                 <div class="split-button-container">
                                     <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -913,7 +1085,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -928,7 +1100,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -943,7 +1115,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -958,7 +1130,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -973,7 +1145,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -988,7 +1160,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1003,7 +1175,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1018,7 +1190,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1033,7 +1205,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1048,7 +1220,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1063,7 +1235,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1085,7 +1257,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1100,7 +1272,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1115,7 +1287,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1130,7 +1302,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1145,7 +1317,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1160,7 +1332,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1175,7 +1347,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1190,7 +1362,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1205,7 +1377,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1220,7 +1392,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1235,7 +1407,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1250,7 +1422,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1265,7 +1437,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1280,7 +1452,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1295,7 +1467,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1310,7 +1482,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1325,7 +1497,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1340,7 +1512,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1355,7 +1527,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1370,7 +1542,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1385,7 +1557,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1400,7 +1572,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1415,7 +1587,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1437,7 +1609,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1452,7 +1624,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1467,7 +1639,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1491,7 +1663,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1506,7 +1678,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1521,7 +1693,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1536,7 +1708,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1551,7 +1723,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1566,7 +1738,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1581,7 +1753,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1596,7 +1768,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1611,7 +1783,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1626,7 +1798,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1641,7 +1813,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1656,7 +1828,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1680,7 +1852,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1695,7 +1867,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1710,7 +1882,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1725,7 +1897,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1740,7 +1912,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1755,7 +1927,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1770,7 +1942,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1785,7 +1957,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1800,7 +1972,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1815,7 +1987,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1839,7 +2011,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1854,7 +2026,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1869,7 +2041,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1884,7 +2056,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1899,7 +2071,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1914,7 +2086,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1929,7 +2101,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1951,7 +2123,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1966,7 +2138,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1981,7 +2153,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -1996,7 +2168,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2011,7 +2183,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2035,7 +2207,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2050,7 +2222,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2074,7 +2246,7 @@
                             <li>
                                 <div class="split-button-container">
                                     <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2098,7 +2270,7 @@
                         <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2122,7 +2294,7 @@
                         <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2137,7 +2309,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2161,7 +2333,7 @@
                         <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2176,7 +2348,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2200,7 +2372,7 @@
                         <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2215,7 +2387,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2230,7 +2402,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2245,7 +2417,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2260,7 +2432,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2275,7 +2447,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2299,7 +2471,7 @@
                         <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2314,7 +2486,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2329,7 +2501,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2344,7 +2516,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2359,7 +2531,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2374,7 +2546,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2389,7 +2561,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2404,7 +2576,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2428,7 +2600,7 @@
                         <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2443,7 +2615,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2458,7 +2630,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2482,7 +2654,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2497,7 +2669,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2512,7 +2684,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2527,7 +2699,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2542,7 +2714,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2557,7 +2729,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2572,7 +2744,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2587,7 +2759,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2602,7 +2774,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2617,7 +2789,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2632,7 +2804,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2647,7 +2819,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2662,7 +2834,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2677,7 +2849,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2692,7 +2864,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2707,7 +2879,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2722,7 +2894,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2737,7 +2909,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2752,7 +2924,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2767,7 +2939,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2782,7 +2954,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2797,7 +2969,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2812,7 +2984,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2827,7 +2999,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2842,7 +3014,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2857,7 +3029,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2872,7 +3044,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2887,7 +3059,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -2909,7 +3081,7 @@
                             <li>
                                 <div class="split-button-container">
                             <button type="button" class="chevron-toggle" aria-label="Toggle submenu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="10" height="10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="8" height="8">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </button>
@@ -3211,7 +3383,36 @@
 
                     // --- Hide primary nav on scroll ---
             let lastScrollTop = 0;
-            const primaryNav = document.querySelector('rh-navigation-primary');
+            // Primary nav dropdown functionality
+            const dropdownButtons = document.querySelectorAll('.primary-nav-item.has-dropdown > button');
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const navItem = this.closest('.primary-nav-item');
+                    const isOpen = navItem.classList.contains('dropdown-open');
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.primary-nav-item.dropdown-open').forEach(item => {
+                        if (item !== navItem) {
+                            item.classList.remove('dropdown-open');
+                        }
+                    });
+                    
+                    // Toggle this dropdown
+                    navItem.classList.toggle('dropdown-open', !isOpen);
+                });
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.primary-nav-item')) {
+                    document.querySelectorAll('.primary-nav-item.dropdown-open').forEach(item => {
+                        item.classList.remove('dropdown-open');
+                    });
+                }
+            });
+            
+            const primaryNav = document.querySelector('.primary-nav');
             
             window.addEventListener('scroll', function() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
